@@ -26,14 +26,32 @@ final class MenuViewController: UIViewController {
         view.backgroundColor = .menuBackgroundColor
         navigationController?.isNavigationBarHidden = true
         stackView.setCustomSpacing(56, after: titleLabel)
+        updateLargeDeviceConstraints()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        updateLargeDeviceConstraints()
+    }
+    
+    private func updateLargeDeviceConstraints() {
         if traitCollection.sizeClass == .hRegular_vRegular {
-            if size.width > size.height {
-                print("landscape")
+            let isLandscape = view.frame.size.width > view.frame.size.height
+            
+            let landscapeConstraints = [
+                stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ]
+            
+            let portraitConstraints = [
+                logoImageView.rightAnchor.constraint(equalTo: view.rightAnchor),
+                stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            ]
+            
+            if isLandscape {
+                view.removeConstraints(portraitConstraints)
+                NSLayoutConstraint.activate(landscapeConstraints)
             } else {
-                print("portrait")
+                view.removeConstraints(landscapeConstraints)
+                NSLayoutConstraint.activate(portraitConstraints)
             }
         }
     }

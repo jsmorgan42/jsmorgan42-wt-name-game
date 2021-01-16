@@ -57,6 +57,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A95238BB25B3A43A00602A0A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		A98DEFED249837FD00D2086D /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -68,7 +75,7 @@
 		A98DEFF024983D3500D2086D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				A98DEFF224983D8000D2086D /* Protocols */,
+				A95238BB25B3A43A00602A0A /* Protocols */,
 				A98DEFF124983D7B00D2086D /* Extensions */,
 			);
 			path = Utilities;
@@ -81,13 +88,6 @@
 				A9D7CF5E25B22EC5007FE576 /* UITraitCollection+SizeClasses.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		A98DEFF224983D8000D2086D /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		A98DEFF52498400A00D2086D /* Networking */ = {
