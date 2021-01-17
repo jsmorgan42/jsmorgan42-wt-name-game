@@ -9,13 +9,23 @@
 import UIKit
 
 final class MenuViewController: UIViewController {
-
+    
     @IBOutlet var stackView: UIStackView!
     @IBOutlet var logoImageView: UIImageView!
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var practiceModeButton: PrimaryButton!
     @IBOutlet var timedModeButton: PrimaryButton!
+    
+    @IBOutlet var topAnchorLogoConstraint: NSLayoutConstraint!
+    @IBOutlet var leftAnchorLogoConstraint: NSLayoutConstraint!
+    @IBOutlet var rightAnchorLogoConstraint: NSLayoutConstraint!
+    @IBOutlet var bottomAnchorLogoConstraint: NSLayoutConstraint!
+    @IBOutlet var centerXStackViewConstraint: NSLayoutConstraint!
+    @IBOutlet var centerYStackViewConstraint: NSLayoutConstraint!
+    @IBOutlet var trailingAnchorStackViewConstraint: NSLayoutConstraint!
+    @IBOutlet var bottomAnchorStackViewConstraint: NSLayoutConstraint!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,34 +36,51 @@ final class MenuViewController: UIViewController {
         view.backgroundColor = .menuBackgroundColor
         navigationController?.isNavigationBarHidden = true
         stackView.setCustomSpacing(56, after: titleLabel)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.layoutIfNeeded()
         updateLargeDeviceConstraints()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         updateLargeDeviceConstraints()
     }
     
     private func updateLargeDeviceConstraints() {
         if traitCollection.sizeClass == .hRegular_vRegular {
-            let isLandscape = view.frame.size.width > view.frame.size.height
+            let isLandscape = view.bounds.size.width > view.bounds.size.height
             
             let landscapeConstraints = [
-                stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+                bottomAnchorLogoConstraint!,
+                trailingAnchorStackViewConstraint!,
+                centerYStackViewConstraint!
             ]
             
             let portraitConstraints = [
-                logoImageView.rightAnchor.constraint(equalTo: view.rightAnchor),
-                stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+                rightAnchorLogoConstraint!,
+                centerXStackViewConstraint!,
+                bottomAnchorStackViewConstraint!
             ]
             
             if isLandscape {
-                view.removeConstraints(portraitConstraints)
+                NSLayoutConstraint.deactivate(portraitConstraints)
                 NSLayoutConstraint.activate(landscapeConstraints)
+                leftAnchorLogoConstraint.constant = -156
+                topAnchorLogoConstraint.constant = -182
             } else {
-                view.removeConstraints(landscapeConstraints)
+
+                NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
+                leftAnchorLogoConstraint.constant = -42
+                topAnchorLogoConstraint.constant = -48
             }
+            view.layoutIfNeeded()
         }
+    }
+    
+    override func updateViewConstraints() {
+        super.updateViewConstraints()
+//        updateLargeDeviceConstraints()
     }
 
 
