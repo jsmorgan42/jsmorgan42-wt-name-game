@@ -26,7 +26,6 @@ final class MenuViewController: UIViewController {
     @IBOutlet var trailingAnchorStackViewConstraint: NSLayoutConstraint!
     @IBOutlet var bottomAnchorStackViewConstraint: NSLayoutConstraint!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -74,15 +73,13 @@ final class MenuViewController: UIViewController {
                 leftAnchorLogoConstraint.constant = -42
                 topAnchorLogoConstraint.constant = -48
             }
-            view.layoutIfNeeded()
         }
     }
     
-    override func updateViewConstraints() {
-        super.updateViewConstraints()
-//        updateLargeDeviceConstraints()
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)  {
+        if segue.identifier == "PracticeModeSegue", let gameViewController = segue.destination as? GameViewController {
+        } else if segue.identifier == "TimedModeSegue", let gameViewController = segue.destination as? GameViewController {
+        }
     }
-
-
 }
 

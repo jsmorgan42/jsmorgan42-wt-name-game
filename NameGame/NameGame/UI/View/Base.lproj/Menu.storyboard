@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gHI-IK-Pfc">
-    <device id="retina6_5" orientation="landscape" appearance="light"/>
+    <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -14,7 +14,7 @@
             <objects>
                 <navigationController id="gHI-IK-Pfc" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yeb-AA-FdU">
-                        <rect key="frame" x="0.0" y="0.0" width="896" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -30,20 +30,20 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MenuViewController" customModule="NameGame" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MenuBackgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="W8o-cO-ydA">
-                                <rect key="frame" x="-12" y="-42" width="445.33333333333331" height="498"/>
+                                <rect key="frame" x="-42" y="2" width="918" height="1026.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="W8o-cO-ydA" secondAttribute="height" multiplier="414:463" id="gwa-PR-Rn5"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Lkl-1O-Ksy">
-                                <rect key="frame" x="469" y="140.66666666666669" width="359" height="132.66666666666669"/>
+                                <rect key="frame" x="214.5" y="948.5" width="405" height="173.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try matching the WillowTree employee to their photo" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maV-BW-eWV" userLabel="Prompt">
-                                        <rect key="frame" x="0.0" y="8" width="359" height="40.666666666666664"/>
+                                        <rect key="frame" x="0.0" y="8" width="405" height="81.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" name="PrimaryFontColor"/>
                                         <nil key="highlightedColor"/>
@@ -52,12 +52,18 @@
                                         </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Tc-Os-fsj" userLabel="Practice Mode Button" customClass="PrimaryButton" customModule="NameGame" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="56.666666666666686" width="359" height="30"/>
+                                        <rect key="frame" x="0.0" y="97.5" width="405" height="30"/>
                                         <state key="normal" title="Practice Mode"/>
+                                        <connections>
+                                            <segue destination="tpP-d4-kaz" kind="show" identifier="PracticeModeSegue" id="UGN-J5-pNs"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OuP-d4-NHh" userLabel="Timed Mode" customClass="PrimaryButton" customModule="NameGame" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="94.666666666666686" width="359" height="30"/>
+                                        <rect key="frame" x="0.0" y="135.5" width="405" height="30"/>
                                         <state key="normal" title="Timed Mode"/>
+                                        <connections>
+                                            <segue destination="tpP-d4-kaz" kind="show" identifier="TimedModeSegue" id="ejD-w2-3Pk"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -174,12 +180,17 @@
         <!--Game-->
         <scene sceneID="5kx-nP-d2Q">
             <objects>
-                <viewControllerPlaceholder storyboardName="Game" id="tpP-d4-kaz" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Game" id="tpP-d4-kaz" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="cmU-yx-6Zy"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H7I-2l-Di1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="893" y="130"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="UGN-J5-pNs"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="MenuBackgroundImage" width="463" height="463"/>
         <namedColor name="PrimaryFontColor">

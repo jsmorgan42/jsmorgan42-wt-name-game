@@ -13,8 +13,6 @@ final class GameViewController: UIViewController, UICollectionViewDelegate {
     
     var profiles: [Profile] = []
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
