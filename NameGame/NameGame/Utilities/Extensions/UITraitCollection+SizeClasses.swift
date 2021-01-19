@@ -11,6 +11,15 @@ import UIKit
 
 enum SizeClass {
     case hRegular_vRegular, hRegular_vCompact, hCompact_vRegular, hCompact_vCompact
+    
+    var isCompactHeight: Bool {
+        switch self {
+        case .hCompact_vCompact, .hRegular_vCompact:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 extension UITraitCollection {

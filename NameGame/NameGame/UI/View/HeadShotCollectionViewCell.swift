@@ -7,4 +7,22 @@
 //
 
 import Foundation
+import UIKit
 
+class HeadShotCollectionViewCell: UICollectionViewCell {
+    
+    static let identifier = "head-shot-cell"
+    static let nibName = "HeadShotCollectionViewCell"
+    
+    @IBOutlet var imageView: UIImageView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setImage()
+    }
+    
+    private func setImage() {
+        imageView.image = UIImage(named: "MenuBackgroundImage")
+    }
+    
+}

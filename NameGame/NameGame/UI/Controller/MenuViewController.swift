@@ -26,6 +26,20 @@ final class MenuViewController: UIViewController {
     @IBOutlet var trailingAnchorStackViewConstraint: NSLayoutConstraint!
     @IBOutlet var bottomAnchorStackViewConstraint: NSLayoutConstraint!
     
+    private var profiles: [Profile] = []
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+        let app = UINavigationBarAppearance()
+        app.shadowColor = .clear
+        app.backgroundColor = .primaryFontColor
+        navigationItem.title = ""
+//        UINavigationBar.appearance().compactAppearance = app
+        UINavigationBar.appearance().standardAppearance = app
+//        UINavigationBar.appearance().scrollEdgeAppearance = app
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -33,11 +47,14 @@ final class MenuViewController: UIViewController {
     
     private func setup() {
         view.backgroundColor = .menuBackgroundColor
-        navigationController?.isNavigationBarHidden = true
         stackView.setCustomSpacing(56, after: titleLabel)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.layoutIfNeeded()
         updateLargeDeviceConstraints()
+        API.getProfiles { (profiles, error) in
+            guard let profiles = profiles else { return }
+            self.profiles = profiles
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,8 +95,16 @@ final class MenuViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)  {
         if segue.identifier == "PracticeModeSegue", let gameViewController = segue.destination as? GameViewController {
+            gameViewController.isPractice = true
+            gameViewController.profiles = profiles
         } else if segue.identifier == "TimedModeSegue", let gameViewController = segue.destination as? GameViewController {
+            gameViewController.isPractice = false
+            gameViewController.profiles = profiles
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
 
