@@ -37,7 +37,7 @@ final class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureHierarchy()
+        configureCollectionView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,6 +62,8 @@ final class GameViewController: UIViewController {
                     cell.imageView.image = image
                 }
                 
+                self.nameLabel.text = "\(profile.firstName) \(profile.lastName)"
+                
             return cell
         })
         updateSnapshot()
@@ -79,7 +81,8 @@ final class GameViewController: UIViewController {
         dataSource.apply(snapshot, animatingDifferences: false)
     }
     
-    private func configureHierarchy() {
+    private func configureCollectionView() {
+        collectionView.isScrollEnabled = false
         collectionView.collectionViewLayout = createLayout()
         collectionView.backgroundColor = .primaryFontColor
         collectionView.register(UINib(nibName: HeadShotCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier:  HeadShotCollectionViewCell.identifier)
