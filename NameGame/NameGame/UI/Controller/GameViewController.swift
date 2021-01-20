@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class GameViewController: UIViewController {
+final class GameViewController: UIViewController, UICollectionViewDelegate {
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var collectionView: UICollectionView!
@@ -18,7 +18,7 @@ final class GameViewController: UIViewController {
     
     var isPractice = false
     
-    var profiles: [Profile] = []
+    var profileViewModel: ProfileViewModel?
     
     private var navigationTitle: String {
         return isPractice ? NSLocalizedString("Practice Mode", comment: "Navigation bar title")
@@ -33,6 +33,7 @@ final class GameViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationItem.title = navigationTitle
+        profileViewModel?.resetGame()
     }
     
     override func viewDidLoad() {
@@ -52,17 +53,21 @@ final class GameViewController: UIViewController {
                 -> UICollectionViewCell? in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HeadShotCollectionViewCell.identifier, for: indexPath)
                 as? HeadShotCollectionViewCell else { fatalError("Failed to create new head shot collection view cell") }
-                guard let headshot = profile.headshot, let imageUrlText = headshot.imageUrl, let imageUrl = URL(string: "https:\(imageUrlText)") else {
+                guard let headshot = profile.headshot,
+                      let imageUrlText = headshot.imageUrl,
+                      let imageUrl = URL(string: "https:\(imageUrlText)"),
+                      let profileViewModel = self.profileViewModel,
+                      let selectedProfile = profileViewModel.selectedProfile else {
                     return cell
                 }
                 let data = try? Data(contentsOf: imageUrl)
 
                 if let imageData = data {
                     let image = UIImage(data: imageData)
-                    cell.imageView.image = image
+                    cell.headShotImageView.image = image
                 }
                 
-                self.nameLabel.text = "\(profile.firstName) \(profile.lastName)"
+                self.nameLabel.text = "\(selectedProfile.firstName) \(selectedProfile.lastName)"
                 
             return cell
         })
@@ -72,16 +77,12 @@ final class GameViewController: UIViewController {
     private func updateSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Profile>()
         snapshot.appendSections([Section.main])
-        var randomProfiles: [Profile] = []
-        for _ in 0..<6 {
-            guard let randomProfile = profiles.randomElement() else { break }
-            randomProfiles.append(randomProfile)
-        }
-        snapshot.appendItems(randomProfiles, toSection: .main)
+        snapshot.appendItems(profileViewModel?.currentProfiles ?? [], toSection: .main)
         dataSource.apply(snapshot, animatingDifferences: false)
     }
     
     private func configureCollectionView() {
+        collectionView.delegate = self
         collectionView.isScrollEnabled = false
         collectionView.collectionViewLayout = createLayout()
         collectionView.backgroundColor = .primaryFontColor
@@ -99,56 +100,60 @@ final class GameViewController: UIViewController {
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        let fractionalHeight = traitCollection.sizeClass == .hCompact_vRegular ? 0.5 : 0.3
+        let fractionalHeight = CGFloat(traitCollection.sizeClass == .hCompact_vRegular ? 0.5 : 0.3)
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(CGFloat(fractionalHeight)),
                                               heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
+        let groupFractionalHeight = CGFloat(traitCollection.sizeClass.isCompactHeight ? 0.5 : 0.35)
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(175))
+                                               heightDimension: .fractionalHeight(groupFractionalHeight))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
-//        let layout = UICollectionViewCompositionalLayout {
-//            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-//
-//            let itemFractionalWidth = CGFloat(1.0 / 2.0)
-//
-//            let item = self.layoutItem(fractionalWidth: itemFractionalWidth, fractionalHeight: 1.0)
-//
-//            let columnGroup = self.horizontalLayoutGroup(fractionalWidth: 1.0, fractionalHeight: 1.0, items: [item, item, item])
-//            let rowGroup = self.verticalLayoutGroup(fractionalWidth: 1.0, fractionalHeight: 1.0 / 3.0, items: [columnGroup, columnGroup, columnGroup])
-//            let section = NSCollectionLayoutSection(group: rowGroup)
-//
-//            return section
-//
-//        }
-//        return layout
     }
     
-    private func layoutItem(fractionalWidth: CGFloat, fractionalHeight: CGFloat) -> NSCollectionLayoutItem {
-        return NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(fractionalWidth),
-            heightDimension: .fractionalHeight(fractionalHeight)))
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let profile = dataSource.itemIdentifier(for: indexPath),
+           let cell = collectionView.cellForItem(at: indexPath) as? HeadShotCollectionViewCell,
+           let profileViewModel = profileViewModel {
+            if profile == profileViewModel.selectedProfile {
+//                cell.feedbackImageView.image = UIImage(named: "CorrectSelection")
+                self.profileViewModel?.nextLevel()
+                updateSnapshot()
+            } else {
+                cell.feedbackImageView.image = UIImage(named: "WrongSelection")
+                displayGameOver()
+            }
+        }
     }
     
-    private func horizontalLayoutGroup(fractionalWidth: CGFloat, fractionalHeight: CGFloat, items: [NSCollectionLayoutItem]) -> NSCollectionLayoutGroup {
-        return NSCollectionLayoutGroup.horizontal(
-        layoutSize: NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(fractionalHeight),
-            heightDimension: .fractionalHeight(fractionalWidth)),
-        subitems: items )
+    private func displayGameOver() {
+        let alert = UIAlertController(title: "Game Over",
+                                      message: "Scored \(profileViewModel?.score ?? 0)/5", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+            self.navigationController?.popViewController(animated: true)
+        }))
+
+        self.present(alert, animated: true)
     }
     
-    private func verticalLayoutGroup(fractionalWidth: CGFloat, fractionalHeight: CGFloat, items: [NSCollectionLayoutItem]) -> NSCollectionLayoutGroup {
-        return NSCollectionLayoutGroup.vertical(
-        layoutSize: NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(fractionalHeight),
-            heightDimension: .fractionalHeight(fractionalWidth)),
-        subitems: items )
-    }
+//    private func layoutItem(fractionalWidth: CGFloat, fractionalHeight: CGFloat) -> NSCollectionLayoutItem {
+//        return NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(fractionalWidth),
+//            heightDimension: .fractionalHeight(fractionalHeight)))
+//    }
+//
+//    private func horizontalLayoutGroup(fractionalWidth: CGFloat, fractionalHeight: CGFloat, items: [NSCollectionLayoutItem]) -> NSCollectionLayoutGroup {
+//        return NSCollectionLayoutGroup.horizontal(
+//        layoutSize: NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(fractionalHeight),
+//            heightDimension: .fractionalHeight(fractionalWidth)),
+//        subitems: items )
+//    }
     
 }
 

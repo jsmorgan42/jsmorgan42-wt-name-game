@@ -26,18 +26,21 @@ final class MenuViewController: UIViewController {
     @IBOutlet var trailingAnchorStackViewConstraint: NSLayoutConstraint!
     @IBOutlet var bottomAnchorStackViewConstraint: NSLayoutConstraint!
     
-    private var profiles: [Profile] = []
+    private var profileViewModel = ProfileViewModel()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-        let app = UINavigationBarAppearance()
-        app.shadowColor = .clear
-        app.backgroundColor = .primaryFontColor
+        setupNavigationBar()
+    }
+    
+    private func setupNavigationBar() {
         navigationItem.title = ""
-//        UINavigationBar.appearance().compactAppearance = app
-        UINavigationBar.appearance().standardAppearance = app
-//        UINavigationBar.appearance().scrollEdgeAppearance = app
+        navigationController?.isNavigationBarHidden = true
+        let appearance = UINavigationBarAppearance()
+        appearance.shadowColor = .clear
+        appearance.backgroundColor = .primaryFontColor
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
     
     override func viewDidLoad() {
@@ -48,12 +51,14 @@ final class MenuViewController: UIViewController {
     private func setup() {
         view.backgroundColor = .menuBackgroundColor
         stackView.setCustomSpacing(56, after: titleLabel)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        view.layoutIfNeeded()
         updateLargeDeviceConstraints()
+        fetchProfiles()
+    }
+    
+    private func fetchProfiles() {
         API.getProfiles { (profiles, error) in
             guard let profiles = profiles else { return }
-            self.profiles = profiles
+            self.profileViewModel.allProfiles = profiles
         }
     }
     
@@ -96,10 +101,10 @@ final class MenuViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)  {
         if segue.identifier == "PracticeModeSegue", let gameViewController = segue.destination as? GameViewController {
             gameViewController.isPractice = true
-            gameViewController.profiles = profiles
+            gameViewController.profileViewModel = profileViewModel
         } else if segue.identifier == "TimedModeSegue", let gameViewController = segue.destination as? GameViewController {
             gameViewController.isPractice = false
-            gameViewController.profiles = profiles
+            gameViewController.profileViewModel = profileViewModel
         }
     }
     

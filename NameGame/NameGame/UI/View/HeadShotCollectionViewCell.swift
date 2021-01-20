@@ -14,15 +14,17 @@ class HeadShotCollectionViewCell: UICollectionViewCell {
     static let identifier = "head-shot-cell"
     static let nibName = "HeadShotCollectionViewCell"
     
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var headShotImageView: UIImageView!
+    @IBOutlet var feedbackImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setImage()
+        setPlaceholderImage()
+        feedbackImageView.alpha = 0.85
     }
     
-    private func setImage() {
-        imageView.image = UIImage(named: "MenuBackgroundImage")
+    private func setPlaceholderImage() {
+        headShotImageView.image = UIImage(named: "MenuBackgroundImage")
     }
     
 }

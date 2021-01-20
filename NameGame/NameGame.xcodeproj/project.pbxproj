@@ -23,6 +23,7 @@
 		A9D3651123D8E62E006E70ED /* Headshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3651023D8E62E006E70ED /* Headshot.swift */; };
 		A9D3651323D8E976006E70ED /* SocialLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3651223D8E976006E70ED /* SocialLink.swift */; };
 		A9D7CF5F25B22EC5007FE576 /* UITraitCollection+SizeClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7CF5E25B22EC5007FE576 /* UITraitCollection+SizeClasses.swift */; };
+		A9DAD7BB25B7C1A900313451 /* ProfilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAD7BA25B7C1A900313451 /* ProfilesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		A9D3651023D8E62E006E70ED /* Headshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Headshot.swift; sourceTree = "<group>"; };
 		A9D3651223D8E976006E70ED /* SocialLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLink.swift; sourceTree = "<group>"; };
 		A9D7CF5E25B22EC5007FE576 /* UITraitCollection+SizeClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+SizeClasses.swift"; sourceTree = "<group>"; };
+		A9DAD7BA25B7C1A900313451 /* ProfilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				A98DEFED249837FD00D2086D /* Components */,
+				A9DAD7B925B7C17800313451 /* Model */,
 				A9D3650A23D8DC1B006E70ED /* Controller */,
 				A9D3650823D8DC0C006E70ED /* View */,
 			);
@@ -183,6 +186,14 @@
 				A9D3651223D8E976006E70ED /* SocialLink.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		A9DAD7B925B7C17800313451 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A9DAD7BA25B7C1A900313451 /* ProfilesViewModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +270,7 @@
 			files = (
 				A9D3651123D8E62E006E70ED /* Headshot.swift in Sources */,
 				A9D3650F23D8E620006E70ED /* Profile.swift in Sources */,
+				A9DAD7BB25B7C1A900313451 /* ProfilesViewModel.swift in Sources */,
 				A98DEFEF2498381A00D2086D /* PrimaryButton.swift in Sources */,
 				A9D3650723D8DB66006E70ED /* GameViewController.swift in Sources */,
 				A9D7CF5F25B22EC5007FE576 /* UITraitCollection+SizeClasses.swift in Sources */,

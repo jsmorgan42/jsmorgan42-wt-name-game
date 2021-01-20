@@ -20,18 +20,27 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PZX-ju-oIy">
                         <rect key="frame" x="16" y="44" width="289" height="231"/>
                     </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O7V-IC-gY2">
+                        <rect key="frame" x="16" y="44" width="289" height="239"/>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="PZX-ju-oIy" secondAttribute="trailing" id="XEO-5D-fSQ"/>
+                    <constraint firstItem="O7V-IC-gY2" firstAttribute="top" secondItem="Sxa-kB-sjR" secondAttribute="topMargin" id="US2-RG-3wO"/>
+                    <constraint firstItem="PZX-ju-oIy" firstAttribute="trailing" secondItem="Sxa-kB-sjR" secondAttribute="trailingMargin" id="XEO-5D-fSQ"/>
                     <constraint firstItem="PZX-ju-oIy" firstAttribute="top" secondItem="Sxa-kB-sjR" secondAttribute="topMargin" id="YnK-nc-b8l"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="PZX-ju-oIy" secondAttribute="bottom" id="dOD-VM-JER"/>
+                    <constraint firstItem="PZX-ju-oIy" firstAttribute="bottom" secondItem="Sxa-kB-sjR" secondAttribute="bottomMargin" id="dOD-VM-JER"/>
+                    <constraint firstItem="O7V-IC-gY2" firstAttribute="bottom" secondItem="Sxa-kB-sjR" secondAttribute="bottomMargin" constant="8" id="lPs-Mg-can"/>
+                    <constraint firstItem="O7V-IC-gY2" firstAttribute="leading" secondItem="Sxa-kB-sjR" secondAttribute="leadingMargin" id="tiZ-yV-JEP"/>
                     <constraint firstItem="PZX-ju-oIy" firstAttribute="leading" secondItem="Sxa-kB-sjR" secondAttribute="leadingMargin" id="tsT-0Q-dMt"/>
+                    <constraint firstItem="O7V-IC-gY2" firstAttribute="trailing" secondItem="Sxa-kB-sjR" secondAttribute="trailingMargin" id="yke-gq-0zW"/>
                 </constraints>
+                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
             </collectionViewCellContentView>
             <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
             <size key="customSize" width="321" height="283"/>
             <connections>
-                <outlet property="imageView" destination="PZX-ju-oIy" id="mtX-RN-nMp"/>
+                <outlet property="feedbackImageView" destination="O7V-IC-gY2" id="tCb-uW-bym"/>
+                <outlet property="headShotImageView" destination="PZX-ju-oIy" id="mtX-RN-nMp"/>
             </connections>
             <point key="canvasLocation" x="128.2608695652174" y="210.60267857142856"/>
         </collectionViewCell>
