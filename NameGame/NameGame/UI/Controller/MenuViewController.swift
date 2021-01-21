@@ -55,6 +55,10 @@ final class MenuViewController: UIViewController {
         fetchProfiles()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     private func fetchProfiles() {
         API.getProfiles { (profiles, error) in
             guard let profiles = profiles else { return }
@@ -103,10 +107,6 @@ final class MenuViewController: UIViewController {
             gameViewController.gameMode = .timed
             gameViewController.profileViewModel = profileViewModel
         }
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }
 

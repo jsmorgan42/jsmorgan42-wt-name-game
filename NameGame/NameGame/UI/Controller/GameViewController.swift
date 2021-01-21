@@ -21,7 +21,7 @@ final class GameViewController: UIViewController, UICollectionViewDelegate {
     private let timerPath = UIBezierPath()
     private let timerLayer = CAShapeLayer()
     private let timerBackgroundLayer = CAShapeLayer()
-    private let timerLimit: CFTimeInterval = 30
+    private let timerLimit: CFTimeInterval = 20
     
     let timerView = UIView(frame: CGRect.init(x: 0, y: 0, width: 20, height: 20))
     
@@ -122,14 +122,16 @@ final class GameViewController: UIViewController, UICollectionViewDelegate {
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        let fractionalHeight = CGFloat(traitCollection.sizeClass == .hCompact_vRegular ? 0.5 : 0.3)
+        let isLargeDeviceLandscape = traitCollection.sizeClass == .hRegular_vRegular
+                                    && view.deviceOrientation == .landscape
+        let fractionalHeight = traitCollection.sizeClass.isCompactHeight || isLargeDeviceLandscape ? 0.333 : 0.5
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(CGFloat(fractionalHeight)),
                                               heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-        let groupFractionalHeight = CGFloat(traitCollection.sizeClass.isCompactHeight ? 0.5 : 0.35)
+        let groupFractionalHeight = traitCollection.sizeClass.isCompactHeight || isLargeDeviceLandscape ? 0.5 : 0.35
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .fractionalHeight(groupFractionalHeight))
+                                               heightDimension: .fractionalHeight(CGFloat(groupFractionalHeight)))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)
@@ -145,23 +147,30 @@ final class GameViewController: UIViewController, UICollectionViewDelegate {
            let profileViewModel = profileViewModel {
             if profileViewModel.currentProfiles[identifier] == profileViewModel.selectedProfile {
                 cell.feedbackImageView.image = UIImage(named: "CorrectSelection")
-                let gameProgress = self.profileViewModel?.nextLevel()
-                if gameProgress == .won {
-                    displayWin()
-                } else {
-                    self.collectionView.isUserInteractionEnabled = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.updateSnapshot()
-                        self.collectionView.isUserInteractionEnabled = true
-                    }
-                }
-
+                handleCorrectProfile()
             } else {
                 cell.feedbackImageView.image = UIImage(named: "WrongSelection")
-                if gameMode == .practice {
-                    displayGameOver()
-                }
+                handleIncorrectProfile()
             }
+        }
+    }
+    
+    private func handleCorrectProfile() {
+        let gameProgress = self.profileViewModel?.nextLevel()
+        if gameProgress == .won {
+            displayWin()
+        } else {
+            self.collectionView.isUserInteractionEnabled = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.updateSnapshot()
+                self.collectionView.isUserInteractionEnabled = true
+            }
+        }
+    }
+    
+    private func handleIncorrectProfile() {
+        if gameMode == .practice {
+            displayGameOver()
         }
     }
     
