@@ -22,6 +22,8 @@ extension UIColor {
     static let menuBackgroundColor = UIColor(safelyNamed: "MenuBackgroundColor")!
     
     static let primaryBackgroundColor = UIColor(safelyNamed: "PrimaryBackgroundColor")!
-    static let primaryFontColor = UIColor(safelyNamed: "PrimaryFontColor")
+    static let primaryFontColor = UIColor(safelyNamed: "PrimaryFontColor")!
+    
+    static let timerBackgroundColor = UIColor(safelyNamed: "TimerBackgroundColor")!
 }
 

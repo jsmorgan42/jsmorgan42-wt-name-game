@@ -24,6 +24,7 @@
 		A9D3651323D8E976006E70ED /* SocialLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3651223D8E976006E70ED /* SocialLink.swift */; };
 		A9D7CF5F25B22EC5007FE576 /* UITraitCollection+SizeClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D7CF5E25B22EC5007FE576 /* UITraitCollection+SizeClasses.swift */; };
 		A9DAD7BB25B7C1A900313451 /* ProfilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAD7BA25B7C1A900313451 /* ProfilesViewModel.swift */; };
+		A9DAD7BF25B7DD4D00313451 /* UIView+DeviceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DAD7BE25B7DD4D00313451 /* UIView+DeviceOrientation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		A9D3651223D8E976006E70ED /* SocialLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLink.swift; sourceTree = "<group>"; };
 		A9D7CF5E25B22EC5007FE576 /* UITraitCollection+SizeClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+SizeClasses.swift"; sourceTree = "<group>"; };
 		A9DAD7BA25B7C1A900313451 /* ProfilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesViewModel.swift; sourceTree = "<group>"; };
+		A9DAD7BE25B7DD4D00313451 /* UIView+DeviceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+DeviceOrientation.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				A98DEFF324983D9500D2086D /* UIColor+AppExtensions.swift */,
 				A9D7CF5E25B22EC5007FE576 /* UITraitCollection+SizeClasses.swift */,
+				A9DAD7BE25B7DD4D00313451 /* UIView+DeviceOrientation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -223,7 +226,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1120;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "Jesse Morgan";
 				TargetAttributes = {
 					A9D364EE23D257A8006E70ED = {
@@ -269,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9D3651123D8E62E006E70ED /* Headshot.swift in Sources */,
+				A9DAD7BF25B7DD4D00313451 /* UIView+DeviceOrientation.swift in Sources */,
 				A9D3650F23D8E620006E70ED /* Profile.swift in Sources */,
 				A9DAD7BB25B7C1A900313451 /* ProfilesViewModel.swift in Sources */,
 				A98DEFEF2498381A00D2086D /* PrimaryButton.swift in Sources */,
@@ -332,6 +336,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -392,6 +397,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

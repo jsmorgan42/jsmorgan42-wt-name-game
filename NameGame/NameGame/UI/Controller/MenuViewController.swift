@@ -69,8 +69,6 @@ final class MenuViewController: UIViewController {
     
     private func updateLargeDeviceConstraints() {
         if traitCollection.sizeClass == .hRegular_vRegular {
-            let isLandscape = view.bounds.size.width > view.bounds.size.height
-            
             let landscapeConstraints = [
                 bottomAnchorLogoConstraint!,
                 trailingAnchorStackViewConstraint!,
@@ -83,13 +81,12 @@ final class MenuViewController: UIViewController {
                 bottomAnchorStackViewConstraint!
             ]
             
-            if isLandscape {
+            if view.deviceOrientation == .landscape {
                 NSLayoutConstraint.deactivate(portraitConstraints)
                 NSLayoutConstraint.activate(landscapeConstraints)
                 leftAnchorLogoConstraint.constant = -156
                 topAnchorLogoConstraint.constant = -182
             } else {
-
                 NSLayoutConstraint.deactivate(landscapeConstraints)
                 NSLayoutConstraint.activate(portraitConstraints)
                 leftAnchorLogoConstraint.constant = -42
@@ -100,10 +97,10 @@ final class MenuViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)  {
         if segue.identifier == "PracticeModeSegue", let gameViewController = segue.destination as? GameViewController {
-            gameViewController.isPractice = true
+            gameViewController.gameMode = .practice
             gameViewController.profileViewModel = profileViewModel
         } else if segue.identifier == "TimedModeSegue", let gameViewController = segue.destination as? GameViewController {
-            gameViewController.isPractice = false
+            gameViewController.gameMode = .timed
             gameViewController.profileViewModel = profileViewModel
         }
     }

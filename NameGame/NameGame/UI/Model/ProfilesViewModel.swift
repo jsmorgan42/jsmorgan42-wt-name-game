@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum GameProgress {
+    case playing, won
+}
+
 struct ProfileViewModel {
     var allProfiles: [Profile] = []
     var currentProfiles: [Profile] = []
@@ -15,6 +19,9 @@ struct ProfileViewModel {
     
     var selectedLevel: Int = 1
     var score: Int = 0
+    
+    private let numberOfProfiles = 6
+    private let maxLevel = 5
     
     mutating func resetGame() {
         selectedProfile = nil
@@ -24,17 +31,24 @@ struct ProfileViewModel {
     }
     
     mutating func increaseScore() {
-        if score < 5 { score += 1 }
+        if score < maxLevel { score += 1 }
     }
     
-    mutating func nextLevel() {
-        if selectedLevel < 5 { selectedLevel += 1 }
+    mutating func nextLevel() -> GameProgress {
+        increaseScore()
         getNewRandomProfiles()
+        
+        if selectedLevel < maxLevel {
+            selectedLevel += 1
+            return .playing
+        } else {
+            return .won
+        }
     }
     
     mutating func getNewRandomProfiles() {
         currentProfiles = []
-        for _ in 0..<6 {
+        for _ in 0..<numberOfProfiles {
             guard let randomProfile = allProfiles.randomElement() else { break }
             currentProfiles.append(randomProfile)
         }
