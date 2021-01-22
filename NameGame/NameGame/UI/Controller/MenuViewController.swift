@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 final class MenuViewController: UIViewController {
     
@@ -25,6 +26,8 @@ final class MenuViewController: UIViewController {
     @IBOutlet var centerYStackViewConstraint: NSLayoutConstraint!
     @IBOutlet var trailingAnchorStackViewConstraint: NSLayoutConstraint!
     @IBOutlet var bottomAnchorStackViewConstraint: NSLayoutConstraint!
+    
+    private var hasServerError = false
     
     private var profileViewModel = ProfileViewModel()
     
@@ -60,9 +63,14 @@ final class MenuViewController: UIViewController {
     }
     
     private func fetchProfiles() {
-        API.getProfiles { (profiles, error) in
-            guard let profiles = profiles else { return }
-            self.profileViewModel.allProfiles = profiles
+        ProfileRepository.shared.getProfiles { (result) in
+            switch result {
+            case .success(let profiles):
+                self.profileViewModel.allProfiles = profiles
+            case .failure(let error):
+                self.hasServerError = true
+                print("Failed to fetch profiles: \(error)")
+            }
         }
     }
     
@@ -97,6 +105,17 @@ final class MenuViewController: UIViewController {
                 topAnchorLogoConstraint.constant = -48
             }
         }
+    }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if hasServerError {
+            let alert = UIAlertController(title: "A server error occured.",
+                                          message: "Please try again later.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return false
+        }
+        return true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)  {
