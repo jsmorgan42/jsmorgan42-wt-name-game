@@ -11,6 +11,8 @@ import Foundation
 
 final class MenuViewController: UIViewController {
     
+    @IBOutlet var loadingSpinner: UIActivityIndicatorView!
+    
     @IBOutlet var stackView: UIStackView!
     @IBOutlet var logoImageView: UIImageView!
     
@@ -63,6 +65,7 @@ final class MenuViewController: UIViewController {
     }
     
     private func fetchProfiles() {
+        startLoading()
         ProfileRepository.shared.getProfiles { (result) in
             switch result {
             case .success(let profiles):
@@ -70,6 +73,9 @@ final class MenuViewController: UIViewController {
             case .failure(let error):
                 self.hasServerError = true
                 print("Failed to fetch profiles: \(error)")
+            }
+            DispatchQueue.main.async {
+                self.stopLoading()
             }
         }
     }
@@ -126,6 +132,18 @@ final class MenuViewController: UIViewController {
             gameViewController.gameMode = .timed
             gameViewController.profileViewModel = profileViewModel
         }
+    }
+    
+    private func startLoading() {
+        loadingSpinner.startAnimating()
+        practiceModeButton.isEnabled = false
+        timedModeButton.isEnabled = false
+    }
+    
+    private func stopLoading() {
+        loadingSpinner.stopAnimating()
+        practiceModeButton.isEnabled = true
+        timedModeButton.isEnabled = true
     }
 }
 

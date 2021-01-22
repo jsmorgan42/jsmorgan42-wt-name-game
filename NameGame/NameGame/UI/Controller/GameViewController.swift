@@ -86,20 +86,25 @@ final class GameViewController: UIViewController, UICollectionViewDelegate {
                       let selectedProfile = profileViewModel.selectedProfile else {
                     return cell
                 }
-                let data = try? Data(contentsOf: imageUrl)
-
-                if let imageData = data {
-                    let image = UIImage(data: imageData)
-                    cell.headShotImageView.image = image
-                }
+                cell.headShotImageView.image = self.loadImage(imageUrl: imageUrl)
+                cell.feedbackImageView.image = nil
                 
                 self.nameLabel.text = "\(selectedProfile.firstName) \(selectedProfile.lastName)"
-                cell.feedbackImageView.image = nil
             return cell
         })
         DispatchQueue.main.async {
             self.updateSnapshot()
         }
+    }
+    
+    private func loadImage(imageUrl: URL) -> UIImage? {
+        let data = try? Data(contentsOf: imageUrl)
+
+        if let imageData = data {
+            return UIImage(data: imageData)
+        }
+        
+        return nil
     }
     
     private func updateSnapshot() {
