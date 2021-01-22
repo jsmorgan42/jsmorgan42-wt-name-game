@@ -33,9 +33,18 @@ final class MenuViewController: UIViewController {
     
     private var profileViewModel = ProfileViewModel()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setup()
     }
     
     private func setupNavigationBar() {
@@ -48,20 +57,11 @@ final class MenuViewController: UIViewController {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
-    }
-    
     private func setup() {
         view.backgroundColor = .menuBackgroundColor
         stackView.setCustomSpacing(56, after: titleLabel)
         updateLargeDeviceConstraints()
         fetchProfiles()
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     private func fetchProfiles() {
@@ -79,6 +79,8 @@ final class MenuViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: Layout
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -113,6 +115,8 @@ final class MenuViewController: UIViewController {
         }
     }
     
+    // MARK: Segue
+    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if hasServerError {
             let alert = UIAlertController(title: "A server error occured.",
@@ -133,6 +137,8 @@ final class MenuViewController: UIViewController {
             gameViewController.profileViewModel = profileViewModel
         }
     }
+    
+    // MARK: Loading Spinner
     
     private func startLoading() {
         loadingSpinner.startAnimating()

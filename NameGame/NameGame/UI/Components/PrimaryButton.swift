@@ -26,7 +26,6 @@ class PrimaryButton: UIButton {
     
     private func setStyle() {
         layer.cornerRadius = 14
-        
         setTitleColor(.primaryFontColor, for: .normal)
         let fontSize = traitCollection.sizeClass == .hRegular_vRegular ? CGFloat(24) : CGFloat(17)
         titleLabel?.font = .systemFont(ofSize: fontSize)
